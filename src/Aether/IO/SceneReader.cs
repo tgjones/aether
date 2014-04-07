@@ -17,9 +17,12 @@ namespace Aether.IO
 {
     public static class SceneReader
     {
+        private static readonly SceneParser Parser = new SceneParser();
+
         public static void Read(TextReader reader, out Scene scene, out Renderer renderer)
         {
             // TODO: Parse.
+            var sceneFile = Parser.Parse(reader.ReadToEnd());
 
             var filter = new MitchellFilter(2.0f, 2.0f, 1.0f / 3.0f, 1.0f / 3.0f);
             var film = new ImageFilm(400, 400, filter, new float[] { 0, 1, 0, 1 });

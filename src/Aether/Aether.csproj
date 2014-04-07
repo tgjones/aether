@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Piglet">
+      <HintPath>..\packages\Piglet.1.4.0\lib\net40\Piglet.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,7 +76,32 @@
     <Compile Include="Integrators\VolumeIntegrator.cs" />
     <Compile Include="Integrators\WhittedIntegrator.cs" />
     <Compile Include="Intersection.cs" />
+    <Compile Include="IO\Ast\SceneFile.cs" />
+    <Compile Include="IO\Ast\AttributeBeginDirective.cs" />
+    <Compile Include="IO\Ast\AttributeEndDirective.cs" />
+    <Compile Include="IO\Ast\ConcatTransformDirective.cs" />
+    <Compile Include="IO\Ast\CoordinateSystemDirective.cs" />
+    <Compile Include="IO\Ast\CoordSysTransformDirective.cs" />
+    <Compile Include="IO\Ast\Directive.cs" />
+    <Compile Include="IO\Ast\IdentityDirective.cs" />
+    <Compile Include="IO\Ast\LookAtDirective.cs" />
+    <Compile Include="IO\Ast\Param.cs" />
+    <Compile Include="IO\Ast\ParamSet.cs" />
+    <Compile Include="IO\Ast\RotateDirective.cs" />
+    <Compile Include="IO\Ast\ScaleDirective.cs" />
+    <Compile Include="IO\Ast\StandardDirective.cs" />
+    <Compile Include="IO\Ast\StandardDirectiveType.cs" />
+    <Compile Include="IO\Ast\TextureDirective.cs" />
+    <Compile Include="IO\Ast\TransformDirective.cs" />
+    <Compile Include="IO\Ast\TranslateDirective.cs" />
+    <Compile Include="IO\Ast\WorldBeginDirective.cs" />
+    <Compile Include="IO\Ast\WorldEndDirective.cs" />
+    <Compile Include="IO\SceneParser.cs" />
     <Compile Include="IO\SceneReader.cs" />
+    <Compile Include="IO\Util\NonTerminalWrapper.cs" />
+    <Compile Include="IO\Util\ProductionWrapper.cs" />
+    <Compile Include="IO\Util\SymbolWrapper.cs" />
+    <Compile Include="IO\Util\TerminalWrapper.cs" />
     <Compile Include="Lights\AreaLight.cs" />
     <Compile Include="Lights\Light.cs" />
     <Compile Include="Lights\LightSample.cs" />
