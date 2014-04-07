@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CBEF68D6-9CE6-4C0F-8708-F0DD3D945638}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Aether</RootNamespace>
+    <AssemblyName>Aether</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WriteableBitmapEx.Wpf">
+      <HintPath>..\packages\WriteableBitmapEx.1.0.12.0\lib\net40\WriteableBitmapEx.Wpf.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accelerators\GridAccelerator.cs" />
+    <Compile Include="Accelerators\GridVoxel.cs" />
+    <Compile Include="Cameras\Camera.cs" />
+    <Compile Include="Cameras\PerspectiveCamera.cs" />
+    <Compile Include="Cameras\ProjectiveCamera.cs" />
+    <Compile Include="Films\Film.cs" />
+    <Compile Include="Films\FilmExtent.cs" />
+    <Compile Include="Films\ImageFilm.cs" />
+    <Compile Include="Films\ImagePixel.cs" />
+    <Compile Include="Filters\Filter.cs" />
+    <Compile Include="Filters\MitchellFilter.cs" />
+    <Compile Include="Geometry\AnimatedTransform.cs" />
+    <Compile Include="Geometry\BBox.cs" />
+    <Compile Include="Geometry\Matrix4x4.cs" />
+    <Compile Include="Geometry\Normal.cs" />
+    <Compile Include="Geometry\Point.cs" />
+    <Compile Include="Geometry\Quaternion.cs" />
+    <Compile Include="Geometry\Ray.cs" />
+    <Compile Include="Geometry\RayDifferential.cs" />
+    <Compile Include="Geometry\Transform.cs" />
+    <Compile Include="Geometry\Vector.cs" />
+    <Compile Include="Integrators\EmissionIntegrator.cs" />
+    <Compile Include="Integrators\Integrator.cs" />
+    <Compile Include="Integrators\IntegratorUtilities.cs" />
+    <Compile Include="Integrators\SurfaceIntegrator.cs" />
+    <Compile Include="Integrators\VolumeIntegrator.cs" />
+    <Compile Include="Integrators\WhittedIntegrator.cs" />
+    <Compile Include="Intersection.cs" />
+    <Compile Include="IO\SceneReader.cs" />
+    <Compile Include="Lights\AreaLight.cs" />
+    <Compile Include="Lights\Light.cs" />
+    <Compile Include="Lights\LightSample.cs" />
+    <Compile Include="Lights\LightSampleOffsets.cs" />
+    <Compile Include="Lights\PointLight.cs" />
+    <Compile Include="Lights\VisibilityTester.cs" />
+    <Compile Include="Materials\Material.cs" />
+    <Compile Include="Materials\MatteMaterial.cs" />
+    <Compile Include="MathUtility.cs" />
+    <Compile Include="MonteCarlo\Distribution1D.cs" />
+    <Compile Include="MonteCarlo\Distribution2D.cs" />
+    <Compile Include="MonteCarlo\MonteCarloUtilities.cs" />
+    <Compile Include="MonteCarlo\SamplingUtilities.cs" />
+    <Compile Include="Primitives\Aggregate.cs" />
+    <Compile Include="Primitives\GeometricPrimitive.cs" />
+    <Compile Include="Primitives\Primitive.cs" />
+    <Compile Include="Primitives\TransformedPrimitive.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\Bsdf.cs" />
+    <Compile Include="Reflection\BsdfSampleOffsets.cs" />
+    <Compile Include="Reflection\Bssrdf.cs" />
+    <Compile Include="Reflection\Bxdf.cs" />
+    <Compile Include="Reflection\BsdfSample.cs" />
+    <Compile Include="Reflection\BxdfType.cs" />
+    <Compile Include="Reflection\Lambertian.cs" />
+    <Compile Include="Reflection\OrenNayar.cs" />
+    <Compile Include="Reflection\ReflectionUtilities.cs" />
+    <Compile Include="Renderers\Renderer.cs" />
+    <Compile Include="Renderers\SamplerRenderer.cs" />
+    <Compile Include="Sampling\CameraSample.cs" />
+    <Compile Include="Sampling\Sample.cs" />
+    <Compile Include="Sampling\Sampler.cs" />
+    <Compile Include="Sampling\StratifiedSampler.cs" />
+    <Compile Include="Scene.cs" />
+    <Compile Include="Shapes\DifferentialGeometry.cs" />
+    <Compile Include="Shapes\Shape.cs" />
+    <Compile Include="Shapes\Sphere.cs" />
+    <Compile Include="Spectrum.cs" />
+    <Compile Include="Textures\ConstantTexture.cs" />
+    <Compile Include="Textures\Texture.cs" />
+    <Compile Include="Volumes\VolumeRegion.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
