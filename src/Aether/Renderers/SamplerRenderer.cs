@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Windows.Media.Imaging;
 using Aether.Cameras;
@@ -86,6 +87,12 @@ namespace Aether.Renderers
                 if (_sampler.ReportResults(samples, rays, Ls, isects, sampleCount))
                     for (int i = 0; i < sampleCount; ++i)
                         _camera.Film.AddSample(samples[i], Ls[i]);
+
+                _camera.Film.UpdateDisplay(
+                    (int) samples.Min(s => s.ImageX),
+                    (int) samples.Min(s => s.ImageY),
+                    (int) samples.Max(s => s.ImageX),
+                    (int) samples.Max(s => s.ImageY));
             }
         }
 

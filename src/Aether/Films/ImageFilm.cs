@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Aether.Filters;
@@ -19,6 +20,7 @@ namespace Aether.Films
         private readonly int _yPixelCount;
         private readonly ImagePixel[,] _pixels;
         private readonly float[] _filterTable;
+        private readonly byte[] _bgra;
 
         public ImageFilm(int xResolution, int yResolution, Filter filter, float[] cropWindow)
             : base(xResolution, yResolution)
@@ -52,6 +54,8 @@ namespace Aether.Films
                     _filterTable[index++] = filter.Evaluate(fx, fy);
                 }
             }
+
+            _bgra = new byte[_xPixelCount * _yPixelCount * 4];
         }
 
         public override WriteableBitmap Bitmap
@@ -161,58 +165,64 @@ namespace Aether.Films
             AtomicAdd(ref pixel.SplatXyz[2], xyz[2]);
         }
 
-        public unsafe override void WriteImage(float splatScale = 1)
+        public override void WriteImage(float splatScale = 1)
         {
+            UpdateDisplay(0, 0, _xPixelCount - 1, _yPixelCount - 1, splatScale);
+        }
+
+        private static byte ConvertToByte(float[] rgb, int index)
+        {
+            return (byte) MathUtility.Clamp(MathUtility.Pow(rgb[index], 1.0f / 1.8f) * 255.0f, 0, 255.0f);
+        }
+
+        public override void UpdateDisplay(int x0, int y0, int x1, int y1, float splatScale = 1)
+        {
+            if (x0 < 0 || y0 < 0 || x1 >= _xPixelCount || y1 >= _yPixelCount)
+                return;
+
             // Convert image to RGB and compute final pixel values
-            int nPix = _xPixelCount * _yPixelCount;
-            var rgb = new float[3 * nPix];
-            int offset = 0;
-            for (int y = 0; y < _yPixelCount; ++y)
+            var rgb = new float[3];
+            for (int y = y0; y <= y1; ++y)
             {
-                for (int x = 0; x < _xPixelCount; ++x)
+                for (int x = x0; x <= x1; ++x)
                 {
                     var pixel = _pixels[x, y];
 
                     // Convert pixel XYZ color to RGB
-                    Spectrum.XyzToRgb(pixel.Lxyz, new ArraySegment<float>(rgb, 3 * offset, 3));
+                    Spectrum.XyzToRgb(pixel.Lxyz, rgb);
 
                     // Normalize pixel with weight sum
                     float weightSum = pixel.WeightSum;
                     if (weightSum != 0.0f)
                     {
                         float invWt = 1.0f / weightSum;
-                        rgb[3 * offset] = Math.Max(0.0f, rgb[3 * offset] * invWt);
-                        rgb[3 * offset + 1] = Math.Max(0.0f, rgb[3 * offset + 1] * invWt);
-                        rgb[3 * offset + 2] = Math.Max(0.0f, rgb[3 * offset + 2] * invWt);
+                        rgb[0] = Math.Max(0.0f, rgb[0] * invWt);
+                        rgb[1] = Math.Max(0.0f, rgb[1] * invWt);
+                        rgb[2] = Math.Max(0.0f, rgb[2] * invWt);
                     }
 
                     // Add splat value at pixel
                     var splatRgb = new float[3];
                     Spectrum.XyzToRgb(pixel.SplatXyz, splatRgb);
-                    rgb[3 * offset] += splatScale * splatRgb[0];
-                    rgb[3 * offset + 1] += splatScale * splatRgb[1];
-                    rgb[3 * offset + 2] += splatScale * splatRgb[2];
-                    ++offset;
+                    rgb[0] += splatScale * splatRgb[0];
+                    rgb[1] += splatScale * splatRgb[1];
+                    rgb[2] += splatScale * splatRgb[2];
+
+                    var offset = ((y * _xPixelCount) + x) * 4;
+                    _bgra[offset + 0] = ConvertToByte(rgb, 2); // B
+                    _bgra[offset + 1] = ConvertToByte(rgb, 1); // G
+                    _bgra[offset + 2] = ConvertToByte(rgb, 0); // R
+                    _bgra[offset + 3] = 255; // A
                 }
             }
 
             _bitmap.Dispatcher.Invoke(() =>
             {
-                var index = 0;
-                using (var bitmapContext = new BitmapContext(_bitmap))
-                    for (var i = 0; i < rgb.Length; i += 3)
-                    {
-                        var r = (byte) MathUtility.Clamp(MathUtility.Pow(rgb[i + 0], 1.0f / 1.8f) * 255.0f, 0, 255.0f);
-                        var g = (byte) MathUtility.Clamp(MathUtility.Pow(rgb[i + 1], 1.0f / 1.8f) * 255.0f, 0, 255.0f);
-                        var b = (byte) MathUtility.Clamp(MathUtility.Pow(rgb[i + 2], 1.0f / 1.8f) * 255.0f, 0, 255.0f);
-                        bitmapContext.Pixels[index++] = -16777216 | (int) r << 16 | (int) g << 8 | (int) b;
-                    }   
+                var stride = _bitmap.PixelWidth * _bitmap.Format.BitsPerPixel / 8;
+                _bitmap.WritePixels(
+                    new Int32Rect(x0, y0, x1 - x0 + 1, y1 - y0 + 1),
+                    _bgra, stride, x0, y0);
             });
-        }
-
-        public override void UpdateDisplay(int x0, int y0, int x1, int y1, float splatScale = 1)
-        {
-            
         }
 
         private static void AtomicAdd(ref float value, float delta)
