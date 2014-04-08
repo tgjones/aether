@@ -118,6 +118,7 @@
     <Compile Include="IO\Util\TerminalWrapper.cs" />
     <Compile Include="Lights\AreaLight.cs" />
     <Compile Include="Lights\DiffuseAreaLight.cs" />
+    <Compile Include="Lights\DistantLight.cs" />
     <Compile Include="Lights\Light.cs" />
     <Compile Include="Lights\LightSample.cs" />
     <Compile Include="Lights\LightSampleOffsets.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Sampling\StratifiedSampler.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Shapes\DifferentialGeometry.cs" />
+    <Compile Include="Shapes\Disk.cs" />
     <Compile Include="Shapes\Shape.cs" />
     <Compile Include="Shapes\Sphere.cs" />
     <Compile Include="Spectrum.cs" />

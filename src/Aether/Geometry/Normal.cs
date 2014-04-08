@@ -43,6 +43,12 @@ namespace Aether.Geometry
             return MathUtility.Sqrt(LengthSquared());
         }
 
+        #region Static properties
+
+        public static readonly Normal Zero = new Normal(0, 0, 0);
+
+        #endregion
+
         #region Static methods
 
         public static Vector Cross(Normal v1, Vector v2)

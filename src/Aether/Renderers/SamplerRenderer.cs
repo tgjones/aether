@@ -88,11 +88,11 @@ namespace Aether.Renderers
                     for (int i = 0; i < sampleCount; ++i)
                         _camera.Film.AddSample(samples[i], Ls[i]);
 
-                _camera.Film.UpdateDisplay(
-                    (int) samples.Min(s => s.ImageX),
-                    (int) samples.Min(s => s.ImageY),
-                    (int) samples.Max(s => s.ImageX),
-                    (int) samples.Max(s => s.ImageY));
+                //_camera.Film.UpdateDisplay(
+                //    (int) samples.Min(s => s.ImageX),
+                //    (int) samples.Min(s => s.ImageY),
+                //    (int) samples.Max(s => s.ImageX),
+                //    (int) samples.Max(s => s.ImageY));
             }
         }
 

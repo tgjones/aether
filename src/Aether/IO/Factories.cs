@@ -125,6 +125,15 @@ namespace Aether.IO
         {
             switch (name)
             {
+                case "distant" :
+                {
+                    var l = parameters.FindSpectrum("L", new Spectrum(1.0f));
+                    var scale = parameters.FindSpectrum("scale", new Spectrum(1.0f));
+                    var from = parameters.FindPoint("from", Point.Zero);
+                    var to = parameters.FindPoint("to", new Point(0, 0, 1));
+                    var dir = from - to;
+                    return new DistantLight(lightToWorld, l * scale, dir);
+                }
                 case "point":
                 {
                     var i = parameters.FindSpectrum("I", new Spectrum(1.0f));
@@ -177,6 +186,15 @@ namespace Aether.IO
         {
             switch (name)
             {
+                case "disk" :
+                {
+                    var height = parameters.FindSingle("height", 0.0f);
+                    var radius = parameters.FindSingle("radius", 1.0f);
+                    var innerRadius = parameters.FindSingle("innerradius", 0.0f);
+                    var phiMax = parameters.FindSingle("phimax", 360.0f);
+                    return new Disk(objectToWorld, reverseOrientation,
+                        height, radius, innerRadius, phiMax);
+                }
                 case "sphere":
                 {
                     var radius = parameters.FindSingle("radius", 1.0f);
