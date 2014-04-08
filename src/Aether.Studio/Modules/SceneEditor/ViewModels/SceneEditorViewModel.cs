@@ -84,7 +84,16 @@ namespace Aether.Studio.Modules.SceneEditor.ViewModels
 
             OutputBitmap = renderer.Output;
 
-            Task.Factory.StartNew(() => renderer.Render(scene, token), token);
+            Task.Factory.StartNew(() => renderer.Render(scene, token), token)
+                .ContinueWith(t =>
+                {
+                    switch (t.Status)
+                    {
+                        case TaskStatus.Faulted:
+                            _errorList.AddItem(ErrorListItemType.Error, t.Exception.Message);
+                            break;
+                    }
+                });
         }
     }
 }
