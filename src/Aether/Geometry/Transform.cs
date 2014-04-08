@@ -18,6 +18,12 @@ namespace Aether.Geometry
             _mInv = minv ?? Matrix4x4.Invert(_m);
         }
 
+        public Transform()
+            : this(new Matrix4x4())
+        {
+            
+        }
+
         public Matrix4x4 Matrix
         {
             get { return _m; }

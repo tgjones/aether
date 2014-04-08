@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accelerators\BoundingVolumeHierarchyAccelerator.cs" />
     <Compile Include="Accelerators\GridAccelerator.cs" />
     <Compile Include="Accelerators\GridVoxel.cs" />
     <Compile Include="Cameras\Camera.cs" />
@@ -76,6 +77,13 @@
     <Compile Include="Integrators\VolumeIntegrator.cs" />
     <Compile Include="Integrators\WhittedIntegrator.cs" />
     <Compile Include="Intersection.cs" />
+    <Compile Include="IO\Ast\ActiveTransformDirective.cs" />
+    <Compile Include="IO\Ast\ObjectBeginDirective .cs" />
+    <Compile Include="IO\Ast\MakeNamedMaterialDirective.cs" />
+    <Compile Include="IO\Ast\NamedMaterialDirective.cs" />
+    <Compile Include="IO\Ast\ObjectEndDirective.cs" />
+    <Compile Include="IO\Ast\ObjectInstanceDirective.cs" />
+    <Compile Include="IO\Ast\ReverseOrientationDirective.cs" />
     <Compile Include="IO\Ast\SceneFile.cs" />
     <Compile Include="IO\Ast\AttributeBeginDirective.cs" />
     <Compile Include="IO\Ast\AttributeEndDirective.cs" />
@@ -92,17 +100,27 @@
     <Compile Include="IO\Ast\StandardDirective.cs" />
     <Compile Include="IO\Ast\StandardDirectiveType.cs" />
     <Compile Include="IO\Ast\TextureDirective.cs" />
+    <Compile Include="IO\Ast\TransformBeginDirective.cs" />
     <Compile Include="IO\Ast\TransformDirective.cs" />
+    <Compile Include="IO\Ast\TransformEndDirective.cs" />
+    <Compile Include="IO\Ast\TransformTimesDirective.cs" />
     <Compile Include="IO\Ast\TranslateDirective.cs" />
     <Compile Include="IO\Ast\WorldBeginDirective.cs" />
     <Compile Include="IO\Ast\WorldEndDirective.cs" />
+    <Compile Include="IO\Factories.cs" />
+    <Compile Include="IO\GraphicsState.cs" />
+    <Compile Include="IO\RenderOptions.cs" />
     <Compile Include="IO\SceneParser.cs" />
     <Compile Include="IO\SceneReader.cs" />
+    <Compile Include="IO\SceneReaderContext.cs" />
+    <Compile Include="IO\TextureParams.cs" />
+    <Compile Include="IO\TransformSet.cs" />
     <Compile Include="IO\Util\NonTerminalWrapper.cs" />
     <Compile Include="IO\Util\ProductionWrapper.cs" />
     <Compile Include="IO\Util\SymbolWrapper.cs" />
     <Compile Include="IO\Util\TerminalWrapper.cs" />
     <Compile Include="Lights\AreaLight.cs" />
+    <Compile Include="Lights\DiffuseAreaLight.cs" />
     <Compile Include="Lights\Light.cs" />
     <Compile Include="Lights\LightSample.cs" />
     <Compile Include="Lights\LightSampleOffsets.cs" />
@@ -142,6 +160,7 @@
     <Compile Include="Spectrum.cs" />
     <Compile Include="Textures\ConstantTexture.cs" />
     <Compile Include="Textures\Texture.cs" />
+    <Compile Include="Volumes\AggregateVolume.cs" />
     <Compile Include="Volumes\VolumeRegion.cs" />
   </ItemGroup>
   <ItemGroup>

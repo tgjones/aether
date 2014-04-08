@@ -38,6 +38,14 @@ namespace Aether.Geometry
             return new BBox(min, max);
         }
 
+        public static BBox Union(IEnumerable<BBox> boxes)
+        {
+            var result = Empty;
+            foreach (var box in boxes)
+                result = Union(result, box);
+            return result;
+        }
+
         /// Creates a bounding box from two points.
         public static BBox FromPoints(Point p1, Point p2)
         {

@@ -6,5 +6,10 @@ namespace Aether.IO.Ast
     {
         public float Angle { get; set; }
         public Vector Axis { get; set; }
+
+        public override void Process(SceneReaderContext context)
+        {
+            context.ForActiveTransforms(t => t * Transform.Rotate(Angle, Axis));
+        }
     }
 }

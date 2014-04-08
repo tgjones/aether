@@ -3,13 +3,17 @@
     public enum StandardDirectiveType
     {
         Accelerator,
+        AreaLightSource,
         Camera,
         Film,
         LightSource,
         Material,
         PixelFilter,
+        Renderer,
         Sampler,
         Shape,
-        SurfaceIntegrator
+        SurfaceIntegrator,
+        Volume,
+        VolumeIntegrator
     }
 }

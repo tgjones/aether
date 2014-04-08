@@ -7,6 +7,13 @@ namespace Aether.Integrators
 {
     public class EmissionIntegrator : VolumeIntegrator
     {
+        private readonly float _stepSize;
+
+        public EmissionIntegrator(float stepSize)
+        {
+            _stepSize = stepSize;
+        }
+
         public override Spectrum Li(Scene scene, Renderer renderer, RayDifferential ray, Sample sample, Random rng, out Spectrum transmittance)
         {
             // TODO

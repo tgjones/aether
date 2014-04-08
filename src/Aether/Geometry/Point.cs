@@ -33,6 +33,12 @@ namespace Aether.Geometry
             }
         }
 
+        #region Static properties
+
+        public static readonly Point Zero = new Point(0, 0, 0);
+
+        #endregion
+
         #region Static methods
 
         public static float Distance(Point p1, Point p2)

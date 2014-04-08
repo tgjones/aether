@@ -30,6 +30,7 @@ namespace Aether.IO
             var vector = CreateNonTerminal<Vector>(configurator);
             var matrix = CreateNonTerminal<Matrix4x4>(configurator);
             var floatOrInt = CreateNonTerminal<float>(configurator);
+            var activeTransformType = CreateNonTerminal<ActiveTransformType>(configurator);
 
             // Terminals.
 
@@ -118,20 +119,52 @@ namespace Aether.IO
                 {
                     Transform = b
                 });
+            directive.Add(CreateTerminal(configurator, "TransformTimes"), floatOrInt, floatOrInt).SetReduce(
+                (_, b, c) => new TransformTimesDirective
+                {
+                    Start = b,
+                    End = c
+                });
+            directive.Add(CreateTerminal(configurator, "ActiveTransform"), activeTransformType).SetReduce(
+                (_, b) => new ActiveTransformDirective
+                {
+                    Type = b
+                });
+            directive.Add(CreateTerminal(configurator, "MakeNamedMaterial"), quotedString, quotedString, paramSet).SetReduce(
+                (_, b, c, d) => new MakeNamedMaterialDirective
+                {
+                    MaterialName = b,
+                    MaterialType = c,
+                    Parameters = new ParamSet(d)
+                });
+            directive.Add(CreateTerminal(configurator, "NamedMaterial"), quotedString).SetReduce(
+                (_, b) => new NamedMaterialDirective { MaterialName = b });
+            directive.Add(CreateTerminal(configurator, "ObjectBegin"), quotedString).SetReduce(
+                (_, b) => new ObjectBeginDirective { Name = b });
+            directive.Add(CreateTerminal(configurator, "ObjectEnd")).SetReduce(_ => new ObjectEndDirective());
+            directive.Add(CreateTerminal(configurator, "ObjectInstance"), quotedString).SetReduce(
+                (_, b) => new ObjectInstanceDirective { Name = b });
+            directive.Add(CreateTerminal(configurator, "ReverseOrientation")).SetReduce(_ => new ReverseOrientationDirective());
+            directive.Add(CreateTerminal(configurator, "TransformBegin")).SetReduce(_ => new TransformBeginDirective());
+            directive.Add(CreateTerminal(configurator, "TransformEnd")).SetReduce(_ => new TransformEndDirective());
             directive.Add(CreateTerminal(configurator, "WorldBegin")).SetReduce(_ => new WorldBeginDirective());
             directive.Add(CreateTerminal(configurator, "WorldEnd")).SetReduce(_ => new WorldEndDirective());
             directive.Add(CreateTerminal(configurator, "AttributeBegin")).SetReduce(_ => new AttributeBeginDirective());
             directive.Add(CreateTerminal(configurator, "AttributeEnd")).SetReduce(_ => new AttributeEndDirective());
 
             standardDirectiveType.Add(CreateTerminal(configurator, "Accelerator")).SetReduce(_ => StandardDirectiveType.Accelerator);
+            standardDirectiveType.Add(CreateTerminal(configurator, "AreaLightSource")).SetReduce(_ => StandardDirectiveType.AreaLightSource);
             standardDirectiveType.Add(CreateTerminal(configurator, "Camera")).SetReduce(_ => StandardDirectiveType.Camera);
             standardDirectiveType.Add(CreateTerminal(configurator, "Film")).SetReduce(_ => StandardDirectiveType.Film);
             standardDirectiveType.Add(CreateTerminal(configurator, "LightSource")).SetReduce(_ => StandardDirectiveType.LightSource);
             standardDirectiveType.Add(CreateTerminal(configurator, "Material")).SetReduce(_ => StandardDirectiveType.Material);
             standardDirectiveType.Add(CreateTerminal(configurator, "PixelFilter")).SetReduce(_ => StandardDirectiveType.PixelFilter);
+            standardDirectiveType.Add(CreateTerminal(configurator, "Renderer")).SetReduce(_ => StandardDirectiveType.Renderer);
             standardDirectiveType.Add(CreateTerminal(configurator, "Sampler")).SetReduce(_ => StandardDirectiveType.Sampler);
             standardDirectiveType.Add(CreateTerminal(configurator, "Shape")).SetReduce(_ => StandardDirectiveType.Shape);
             standardDirectiveType.Add(CreateTerminal(configurator, "SurfaceIntegrator")).SetReduce(_ => StandardDirectiveType.SurfaceIntegrator);
+            standardDirectiveType.Add(CreateTerminal(configurator, "Volume")).SetReduce(_ => StandardDirectiveType.Volume);
+            standardDirectiveType.Add(CreateTerminal(configurator, "VolumeIntegrator")).SetReduce(_ => StandardDirectiveType.VolumeIntegrator);
 
             paramSet.Add(paramSet, param).SetReduce((a, b) => a.Concat(new[] { b }).ToArray());
             paramSet.Add(param).SetReduce(a => new[] { a });
@@ -153,6 +186,10 @@ namespace Aether.IO
 
             floatOrInt.Add(floatLiteral).SetReduceToFirst();
             floatOrInt.Add(integerLiteral).SetReduce(a => (float) a);
+
+            activeTransformType.Add(CreateTerminal(configurator, "StartTime")).SetReduce(x => ActiveTransformType.Start);
+            activeTransformType.Add(CreateTerminal(configurator, "EndTime")).SetReduce(x => ActiveTransformType.End);
+            activeTransformType.Add(CreateTerminal(configurator, "All")).SetReduce(x => ActiveTransformType.All);
 
             // Ignore whitespace and comments
             configurator.LexerSettings.Ignore = new[] { @"\s+", @"#[^\n]*\n" };
