@@ -49,6 +49,9 @@
     <Reference Include="Gemini.Modules.CodeEditor">
       <HintPath>..\packages\Gemini.Modules.CodeEditor.0.4.0\lib\net40\Gemini.Modules.CodeEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Gemini.Modules.ErrorList">
+      <HintPath>..\packages\Gemini.Modules.ErrorList.0.4.0\lib\net40\Gemini.Modules.ErrorList.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.AvalonEdit">
       <HintPath>..\packages\AvalonEdit.4.3.1.9430\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>

@@ -16,7 +16,7 @@ namespace Aether.Primitives
             get { return true; }
         }
 
-        public abstract bool TryIntersect(Ray ray, out Intersection intersection);
+        public abstract bool TryIntersect(Ray ray, ref Intersection intersection);
         public abstract bool Intersects(Ray ray);
 
         public virtual IEnumerable<Primitive> Refine()

@@ -17,7 +17,7 @@ namespace Aether.Accelerators
             get { throw new System.NotImplementedException(); ; }
         }
 
-        public override bool TryIntersect(Ray ray, out Intersection intersection)
+        public override bool TryIntersect(Ray ray, ref Intersection intersection)
         {
             throw new System.NotImplementedException();
         }

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Aether.IO;
 using Aether.Renderers;
+using Gemini.Framework.Services;
 using Gemini.Modules.CodeEditor;
 using Gemini.Modules.CodeEditor.ViewModels;
 using Gemini.Modules.CodeEditor.Views;
+using Gemini.Modules.ErrorList;
 
 namespace Aether.Studio.Modules.SceneEditor.ViewModels
 {
@@ -16,6 +18,8 @@ namespace Aether.Studio.Modules.SceneEditor.ViewModels
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class SceneEditorViewModel : CodeEditorViewModel
     {
+        private readonly IErrorList _errorList;
+        private readonly IShell _shell;
         private WriteableBitmap _outputBitmap;
         private ICodeEditorView _codeEditorView;
         private CancellationTokenSource _cancellationTokenSource;
@@ -31,9 +35,12 @@ namespace Aether.Studio.Modules.SceneEditor.ViewModels
         }
 
         [ImportingConstructor]
-        public SceneEditorViewModel(LanguageDefinitionManager languageDefinitionManager)
+        public SceneEditorViewModel(LanguageDefinitionManager languageDefinitionManager,
+            IErrorList errorList, IShell shell)
             : base(languageDefinitionManager)
         {
+            _errorList = errorList;
+            _shell = shell;
         }
 
         protected override void OnViewLoaded(object view)
@@ -48,6 +55,8 @@ namespace Aether.Studio.Modules.SceneEditor.ViewModels
 
         private void OnTextChanged(object sender, EventArgs e)
         {
+            _errorList.Items.Clear();
+
             // Cancel any existing render task.
             if (_cancellationTokenSource != null)
                 _cancellationTokenSource.Cancel();
@@ -62,8 +71,19 @@ namespace Aether.Studio.Modules.SceneEditor.ViewModels
 
             Scene scene;
             Renderer renderer;
-            SceneReader.Read(new StringReader(pbrtCode), out scene, out renderer);
+            try
+            {
+                SceneReader.Read(new StringReader(pbrtCode), out scene, out renderer);
+            }
+            catch (Exception ex)
+            {
+                _errorList.AddItem(ErrorListItemType.Error, ex.Message, Path);
+                _shell.ShowTool(_errorList);
+                return;
+            }
+
             OutputBitmap = renderer.Output;
+
             Task.Factory.StartNew(() => renderer.Render(scene, token), token);
         }
     }

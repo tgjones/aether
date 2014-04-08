@@ -21,12 +21,12 @@ namespace Aether.Primitives
             get { return _worldToPrimitive.MotionBounds(_primitive.WorldBound, true); }
         }
 
-        public override bool TryIntersect(Ray r, out Intersection intersection)
+        public override bool TryIntersect(Ray r, ref Intersection intersection)
         {
             Transform w2p;
             _worldToPrimitive.Interpolate(r.Time, out w2p);
             Ray ray = w2p.TransformRay(r);
-            if (!_primitive.TryIntersect(ray, out intersection))
+            if (!_primitive.TryIntersect(ray, ref intersection))
                 return false;
             r.MaxT = ray.MaxT;
             if (!w2p.IsIdentity())

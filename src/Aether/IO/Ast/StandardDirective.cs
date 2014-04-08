@@ -14,8 +14,6 @@ namespace Aether.IO.Ast
 
         public override void Process(SceneReaderContext context)
         {
-            context.VerifyOptions(DirectiveType.ToString());
-
             switch (DirectiveType)
             {
                 case StandardDirectiveType.Accelerator:
@@ -46,7 +44,7 @@ namespace Aether.IO.Ast
                         ImplementationType, context.CurrentTransform[0], Parameters));
                     break;
                 case StandardDirectiveType.Material:
-                    context.VerifyOptions("Material");
+                    context.VerifyWorld("Material");
                     context.GraphicsState.Material = ImplementationType;
                     context.GraphicsState.MaterialParams = Parameters;
                     context.GraphicsState.CurrentNamedMaterial = "";

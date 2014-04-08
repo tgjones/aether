@@ -65,8 +65,7 @@ namespace Aether.IO.Ast
             if (param == null)
                 return defaultValue;
             if (param.Value.GetType() != typeof(T))
-                throw new InvalidOperationException("Param named '" + name + "' exists, but has the wrong value type.");
-
+                return defaultValue;
             return (T) param.Value;
         }
     }

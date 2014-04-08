@@ -14,6 +14,8 @@ namespace Aether.IO
         public TransformSet()
         {
             _transforms = new Transform[MaxTransforms];
+            for (var i = 0; i < MaxTransforms; i++)
+                _transforms[i] = new Transform();
         }
 
         public Transform this[int index]
@@ -31,6 +33,14 @@ namespace Aether.IO
                         return true;
                 return false;
             }
+        }
+
+        public TransformSet Clone()
+        {
+            var result = new TransformSet();
+            for (var i = 0; i < MaxTransforms; i++)
+                result._transforms[i] = _transforms[i];
+            return result;
         }
 
         public static TransformSet Invert(TransformSet transformSet)

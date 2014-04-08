@@ -34,9 +34,9 @@ namespace Aether
             get { return _worldBound; }
         }
 
-        public bool TryIntersect(Ray ray, out Intersection intersection)
+        public bool TryIntersect(Ray ray, ref Intersection intersection)
         {
-            return _aggregate.TryIntersect(ray, out intersection);
+            return _aggregate.TryIntersect(ray, ref intersection);
         }
 
         public bool Intersects(Ray ray)

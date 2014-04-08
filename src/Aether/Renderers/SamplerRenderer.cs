@@ -73,7 +73,7 @@ namespace Aether.Renderers
                     // Evaluate radiance along camera ray
                     if (rayWeight > 0.0f)
                     {
-                        Ls[i] = rayWeight * Li(scene, rays[i], samples[i], rng, out isects[i], out Ts[i]);
+                        Ls[i] = rayWeight * Li(scene, rays[i], samples[i], rng, ref isects[i], out Ts[i]);
                     }
                     else
                     {
@@ -89,11 +89,11 @@ namespace Aether.Renderers
             }
         }
 
-        public override Spectrum Li(Scene scene, RayDifferential ray, Sample sample, Random rng, out Intersection intersection, out Spectrum t)
+        public override Spectrum Li(Scene scene, RayDifferential ray, Sample sample, Random rng, ref Intersection intersection, out Spectrum t)
         {
             Debug.Assert(ray.Time == sample.Time);
             Spectrum Li = Spectrum.CreateBlack();
-            if (scene.TryIntersect(ray, out intersection))
+            if (scene.TryIntersect(ray, ref intersection))
                 Li = _surfaceIntegrator.Li(scene, this, ray, intersection, sample, rng);
             else
             {

@@ -28,20 +28,17 @@ namespace Aether.Accelerators
             _primitives.Add(prim);
         }
 
-        public bool TryIntersect(Ray ray, out Intersection intersection)
+        public bool TryIntersect(Ray ray, ref Intersection intersection)
         {
             RefineIfNeeded();
 
             // Loop over primitives in voxel and find intersections
-            intersection = null;
             bool hitSomething = false;
             for (var i = 0; i < _primitives.Count; ++i)
             {
                 var prim = _primitives[i];
-                if (prim.TryIntersect(ray, out intersection))
-                {
+                if (prim.TryIntersect(ray, ref intersection))
                     hitSomething = true;
-                }
             }
             return hitSomething;
         }

@@ -87,17 +87,18 @@ namespace Aether.Accelerators
             get { return _bounds; }
         }
 
-        public override bool TryIntersect(Ray ray, out Intersection intersection)
+        public override bool TryIntersect(Ray ray, ref Intersection intersection)
         {
             // Walk ray through voxel grid
             bool hitSomething = false;
             Intersection tempIntersection = null;
             DoIntersect(ray, voxel =>
             {
-                hitSomething |= voxel.TryIntersect(ray, out tempIntersection);
+                hitSomething |= voxel.TryIntersect(ray, ref tempIntersection);
                 return false;
             });
-            intersection = tempIntersection;
+            if (hitSomething)
+                intersection = tempIntersection;
             return hitSomething;
         }
 

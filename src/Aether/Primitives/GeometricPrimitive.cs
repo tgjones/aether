@@ -36,15 +36,12 @@ namespace Aether.Primitives
             return _shape.Refine().Select(x => new GeometricPrimitive(x, _material, _areaLight));
         }
 
-        public override bool TryIntersect(Ray ray, out Intersection intersection)
+        public override bool TryIntersect(Ray ray, ref Intersection intersection)
         {
             float thit, rayEpsilon;
             DifferentialGeometry dg;
             if (!_shape.TryIntersect(ray, out thit, out rayEpsilon, out dg))
-            {
-                intersection = null;
                 return false;
-            }
             intersection = new Intersection(dg, this,
                 _shape.ObjectToWorld, _shape.WorldToObject,
                 rayEpsilon);

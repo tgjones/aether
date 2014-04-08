@@ -7,7 +7,7 @@ namespace Aether.IO
     public class SceneReaderContext
     {
         public SceneReaderState CurrentState = SceneReaderState.OptionsBlock;
-        public TransformSet CurrentTransform;
+        public TransformSet CurrentTransform = new TransformSet();
         public uint ActiveTransformBits = TransformSet.AllTransformsBits;
         public Dictionary<string, TransformSet> NamedCoordinateSystems = new Dictionary<string, TransformSet>();
         public RenderOptions RenderOptions = new RenderOptions();

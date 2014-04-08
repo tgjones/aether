@@ -26,5 +26,21 @@ namespace Aether.IO
                 return NamedMaterials[CurrentNamedMaterial];
             return Factories.MakeMaterial(Material, transform, textureParams);
         }
+
+        public GraphicsState Clone()
+        {
+            return new GraphicsState
+            {
+                FloatTextures = new Dictionary<string, Texture<float>>(FloatTextures),
+                SpectrumTextures = new Dictionary<string, Texture<Spectrum>>(SpectrumTextures),
+                MaterialParams = new ParamSet(MaterialParams),
+                Material = Material,
+                NamedMaterials = new Dictionary<string, Material>(NamedMaterials),
+                CurrentNamedMaterial = CurrentNamedMaterial,
+                AreaLightParams = new ParamSet(AreaLightParams),
+                AreaLight = AreaLight,
+                ReverseOrientation = ReverseOrientation
+            };
+        }
     }
 }
