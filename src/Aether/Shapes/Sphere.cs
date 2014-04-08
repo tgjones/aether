@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Windows.Media;
 using Aether.Geometry;
 using Aether.MonteCarlo;
-using Transform = Aether.Geometry.Transform;
 
 namespace Aether.Shapes
 {
@@ -37,7 +35,7 @@ namespace Aether.Shapes
 
         public override float Area
         {
-            get { return _phiMax * _radius * (_zMax * _zMin); }
+            get { return _phiMax * _radius * (_zMax - _zMin); }
         }
 
         public override bool TryIntersect(Ray r, out float tHit, out float rayEpsilon, out DifferentialGeometry dg)

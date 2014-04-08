@@ -152,6 +152,7 @@
     <Compile Include="Sampling\Sampler.cs" />
     <Compile Include="Sampling\StratifiedSampler.cs" />
     <Compile Include="Scene.cs" />
+    <Compile Include="Shapes\Cylinder.cs" />
     <Compile Include="Shapes\DifferentialGeometry.cs" />
     <Compile Include="Shapes\Disk.cs" />
     <Compile Include="Shapes\Shape.cs" />

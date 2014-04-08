@@ -186,6 +186,15 @@ namespace Aether.IO
         {
             switch (name)
             {
+                case "cylinder":
+                    {
+                        var radius = parameters.FindSingle("radius", 1.0f);
+                        var zMin = parameters.FindSingle("zmin", -1);
+                        var zMax = parameters.FindSingle("zmax", 1);
+                        var phiMax = parameters.FindSingle("phimax", 360.0f);
+                        return new Cylinder(objectToWorld, reverseOrientation,
+                            radius, zMin, zMax, phiMax);
+                    }
                 case "disk" :
                 {
                     var height = parameters.FindSingle("height", 0.0f);
