@@ -173,6 +173,17 @@ namespace Aether
             return (value & (value - 1)) == 0;
         }
 
+        public static uint RoundUpPow2(uint v)
+        {
+            v--;
+            v |= v >> 1;
+            v |= v >> 2;
+            v |= v >> 4;
+            v |= v >> 8;
+            v |= v >> 16;
+            return v + 1;
+        }
+
         /// <summary>
         /// Swaps the left and right values.
         /// </summary>

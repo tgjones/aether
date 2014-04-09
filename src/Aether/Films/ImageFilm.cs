@@ -167,7 +167,7 @@ namespace Aether.Films
 
         public override void WriteImage(float splatScale = 1)
         {
-            UpdateDisplay(0, 0, _xPixelCount - 1, _yPixelCount - 1, splatScale);
+            UpdateDisplay(0, 0, _xPixelCount, _yPixelCount, splatScale);
         }
 
         private static byte ConvertToByte(float[] rgb, int index)
@@ -177,14 +177,20 @@ namespace Aether.Films
 
         public override void UpdateDisplay(int x0, int y0, int x1, int y1, float splatScale = 1)
         {
-            if (x0 < 0 || y0 < 0 || x1 >= _xPixelCount || y1 >= _yPixelCount)
-                return;
+            x0 -= _xPixelStart;
+            x1 -= _xPixelStart;
+            y0 -= _yPixelStart;
+            y1 -= _yPixelStart;
+            x0 = MathUtility.Clamp(x0, 0, _xPixelCount);
+            x1 = MathUtility.Clamp(x1, 0, _xPixelCount);
+            y0 = MathUtility.Clamp(y0, 0, _xPixelCount);
+            y1 = MathUtility.Clamp(y1, 0, _xPixelCount);
 
             // Convert image to RGB and compute final pixel values
             var rgb = new float[3];
-            for (int y = y0; y <= y1; ++y)
+            for (int y = y0; y < y1; ++y)
             {
-                for (int x = x0; x <= x1; ++x)
+                for (int x = x0; x < x1; ++x)
                 {
                     var pixel = _pixels[x, y];
 

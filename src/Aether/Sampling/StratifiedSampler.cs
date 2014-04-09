@@ -85,5 +85,15 @@ namespace Aether.Sampling
             }
             return nSamples;
         }
+
+        public override Sampler GetSubSampler(int num, int count)
+        {
+            var extent = ComputeSubWindow(num, count);
+            if (extent.XStart == extent.XEnd || extent.YStart == extent.YEnd)
+                return null;
+            return new StratifiedSampler(
+                extent, _xPixelSamples, _yPixelSamples,
+                _jitter, ShutterOpen, ShutterClose);
+        }
     }
 }
