@@ -183,8 +183,8 @@ namespace Aether.Films
             y1 -= _yPixelStart;
             x0 = MathUtility.Clamp(x0, 0, _xPixelCount);
             x1 = MathUtility.Clamp(x1, 0, _xPixelCount);
-            y0 = MathUtility.Clamp(y0, 0, _xPixelCount);
-            y1 = MathUtility.Clamp(y1, 0, _xPixelCount);
+            y0 = MathUtility.Clamp(y0, 0, _yPixelCount);
+            y1 = MathUtility.Clamp(y1, 0, _yPixelCount);
 
             // Convert image to RGB and compute final pixel values
             var rgb = new float[3];
@@ -226,7 +226,7 @@ namespace Aether.Films
             {
                 var stride = _bitmap.PixelWidth * _bitmap.Format.BitsPerPixel / 8;
                 _bitmap.WritePixels(
-                    new Int32Rect(x0, y0, x1 - x0 + 1, y1 - y0 + 1),
+                    new Int32Rect(x0, y0, x1 - x0, y1 - y0),
                     _bgra, stride, x0, y0);
             });
         }
