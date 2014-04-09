@@ -38,12 +38,12 @@ namespace Aether.Primitives
                 // Transform instance's differential geometry to world space
                 Transform primitiveToWorld = Transform.Invert(w2p);
                 var dg = intersection.DifferentialGeometry;
-                dg.Point = primitiveToWorld.TransformPoint(dg.Point);
-                dg.Normal = Normal.Normalize(primitiveToWorld.TransformNormal(dg.Normal));
-                dg.DpDu = primitiveToWorld.TransformVector(dg.DpDu);
-                dg.DpDv = primitiveToWorld.TransformVector(dg.DpDv);
-                dg.DnDu = primitiveToWorld.TransformNormal(dg.DnDu);
-                dg.DnDv = primitiveToWorld.TransformNormal(dg.DnDv);
+                dg.Point = primitiveToWorld.TransformPoint(ref dg.Point);
+                dg.Normal = Normal.Normalize(primitiveToWorld.TransformNormal(ref dg.Normal));
+                dg.DpDu = primitiveToWorld.TransformVector(ref dg.DpDu);
+                dg.DpDv = primitiveToWorld.TransformVector(ref dg.DpDv);
+                dg.DnDu = primitiveToWorld.TransformNormal(ref dg.DnDu);
+                dg.DnDv = primitiveToWorld.TransformNormal(ref dg.DnDv);
             }
             return true;
         }

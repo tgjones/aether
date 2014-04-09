@@ -12,7 +12,7 @@ namespace Aether.Lights
             : base(lightToWorld)
         {
             _radiance = radiance;
-            _direction = Vector.Normalize(lightToWorld.TransformVector(direction));
+            _direction = Vector.Normalize(lightToWorld.TransformVector(ref direction));
         }
 
         public override bool IsDeltaLight

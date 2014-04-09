@@ -2,11 +2,11 @@
 {
     public class RayDifferential : Ray
     {
-        public bool HasDifferentials { get; set; }
-        public Point RxOrigin { get; set; }
-        public Point RyOrigin { get; set; }
-        public Vector RxDirection { get; set; }
-        public Vector RyDirection { get; set; }
+        public bool HasDifferentials;
+        public Point RxOrigin;
+        public Point RyOrigin;
+        public Vector RxDirection;
+        public Vector RyDirection;
 
         public RayDifferential(Point origin, Vector direction,
             float start, float end = float.PositiveInfinity,

@@ -9,6 +9,8 @@ namespace Aether.Accelerators
 {
     public class GridAccelerator : Aggregate
     {
+        private static readonly int[] CmpToAxis = { 2, 1, 2, 1, 2, 2, 0, 0 };
+
         private readonly Primitive[] _primitives;
         private readonly int[] _numVoxels;
         private readonly BBox _bounds;
@@ -145,8 +147,7 @@ namespace Aether.Accelerators
                 if (ray.Direction[axis] >= 0)
                 {
                     // Handle ray with positive direction for voxel stepping
-                    NextCrossingT[axis] = rayT +
-                        (VoxelToPos(Pos[axis] + 1, axis) - gridIntersect[axis]) / ray.Direction[axis];
+                    NextCrossingT[axis] = rayT + (VoxelToPos(Pos[axis] + 1, axis) - gridIntersect[axis]) / ray.Direction[axis];
                     DeltaT[axis] = _width[axis] / ray.Direction[axis];
                     Step[axis] = 1;
                     Out[axis] = _numVoxels[axis];
@@ -154,8 +155,7 @@ namespace Aether.Accelerators
                 else
                 {
                     // Handle ray with negative direction for voxel stepping
-                    NextCrossingT[axis] = rayT +
-                        (VoxelToPos(Pos[axis], axis) - gridIntersect[axis]) / ray.Direction[axis];
+                    NextCrossingT[axis] = rayT + (VoxelToPos(Pos[axis], axis) - gridIntersect[axis]) / ray.Direction[axis];
                     DeltaT[axis] = -_width[axis] / ray.Direction[axis];
                     Step[axis] = -1;
                     Out[axis] = -1;
@@ -177,8 +177,7 @@ namespace Aether.Accelerators
                 int bits = (((NextCrossingT[0] < NextCrossingT[1]) ? 1 : 0) << 2) +
                     (((NextCrossingT[0] < NextCrossingT[2]) ? 1 : 0) << 1) +
                     (((NextCrossingT[1] < NextCrossingT[2]) ? 1 : 0));
-                int[] cmpToAxis = { 2, 1, 2, 1, 2, 2, 0, 0 };
-                int stepAxis = cmpToAxis[bits];
+                int stepAxis = CmpToAxis[bits];
                 if (ray.MaxT < NextCrossingT[stepAxis])
                     break;
                 Pos[stepAxis] += Step[stepAxis];

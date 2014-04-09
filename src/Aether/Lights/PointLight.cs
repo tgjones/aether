@@ -12,7 +12,7 @@ namespace Aether.Lights
             : base(lightToWorld)
         {
             _intensity = intensity;
-            _lightPosition = lightToWorld.TransformPoint(new Point(0, 0, 0));
+            _lightPosition = lightToWorld.TransformPoint(Point.Zero);
         }
 
         public override bool IsDeltaLight

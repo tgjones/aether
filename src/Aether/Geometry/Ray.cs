@@ -25,12 +25,12 @@
             Depth = parent.Depth + 1;
         }
 
-        public Point Origin { get; set; }
-        public Vector Direction { get; set; }
-        public float MinT { get; set; }
-        public float MaxT { get; set; }
-        public float Time { get; set; }
-        public int Depth { get; set; }
+        public Point Origin;
+        public Vector Direction;
+        public float MinT;
+        public float MaxT;
+        public float Time;
+        public int Depth;
 
         public Point Evaluate(float t)
         {

@@ -61,9 +61,9 @@ namespace Aether.Shapes
 
             // Initialize _DifferentialGeometry_ from parametric information
             var o2w = ObjectToWorld;
-            dg = new DifferentialGeometry(o2w.TransformPoint(phit),
-                o2w.TransformVector(dpdu), o2w.TransformVector(dpdv),
-                o2w.TransformNormal(dndu), o2w.TransformNormal(dndv),
+            dg = new DifferentialGeometry(o2w.TransformPoint(ref phit),
+                o2w.TransformVector(ref dpdu), o2w.TransformVector(ref dpdv),
+                o2w.TransformNormal(ref dndu), o2w.TransformNormal(ref dndv),
                 u, v, this);
 
             // Update _tHit_ for quadric intersection
@@ -122,7 +122,7 @@ namespace Aether.Shapes
             ns = Normal.Normalize(ObjectToWorld.TransformNormal(new Normal(0, 0, 1)));
             if (ReverseOrientation)
                 ns *= -1.0f;
-            return ObjectToWorld.TransformPoint(p);
+            return ObjectToWorld.TransformPoint(ref p);
         }
     }
 }

@@ -71,6 +71,15 @@
     <Report>
       <Path>Aether.Studio140408.vspx</Path>
     </Report>
+    <Report>
+      <Path>Aether.Studio140409.vspx</Path>
+    </Report>
+    <Report>
+      <Path>Aether.Studio140409(1).vspx</Path>
+    </Report>
+    <Report>
+      <Path>Aether.Studio140409(2).vspx</Path>
+    </Report>
   </Reports>
   <Launches>
     <ProjBinary>

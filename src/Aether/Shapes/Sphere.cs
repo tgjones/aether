@@ -86,11 +86,11 @@ namespace Aether.Shapes
             // Initialize _DifferentialGeometry_ from parametric information
             var o2w = ObjectToWorld;
             dg = new DifferentialGeometry(
-                o2w.TransformPoint(phit),
-                o2w.TransformVector(dpdu),
-                o2w.TransformVector(dpdv),
-                o2w.TransformNormal(dndu),
-                o2w.TransformNormal(dndv),
+                o2w.TransformPoint(ref phit),
+                o2w.TransformVector(ref dpdu),
+                o2w.TransformVector(ref dpdv),
+                o2w.TransformNormal(ref dndu),
+                o2w.TransformNormal(ref dndv),
                 u, v, this);
 
             // Update _tHit_ for quadric intersection
@@ -115,13 +115,13 @@ namespace Aether.Shapes
             ns = Normal.Normalize(ObjectToWorld.TransformNormal(new Normal(p.X, p.Y, p.Z)));
             if (ReverseOrientation)
                 ns *= -1.0f;
-            return ObjectToWorld.TransformPoint(p);
+            return ObjectToWorld.TransformPoint(ref p);
         }
 
         public override Point Sample(Point p, float u1, float u2, out Normal ns)
         {
             // Compute coordinate system for sphere sampling
-            Point Pcenter = ObjectToWorld.TransformPoint(new Point(0, 0, 0));
+            Point Pcenter = ObjectToWorld.TransformPoint(Point.Zero);
             Vector wc = Vector.Normalize(Pcenter - p);
             Vector wcX, wcY;
             Vector.CoordinateSystem(wc, out wcX, out wcY);
@@ -149,7 +149,7 @@ namespace Aether.Shapes
 
         public override float Pdf(Point p, Vector wi)
         {
-            Point Pcenter = ObjectToWorld.TransformPoint(new Point(0, 0, 0));
+            Point Pcenter = ObjectToWorld.TransformPoint(Point.Zero);
             // Return uniform weight if point inside sphere
             if (Point.DistanceSquared(p, Pcenter) - _radius * _radius < 1e-4f)
                 return base.Pdf(p, wi);

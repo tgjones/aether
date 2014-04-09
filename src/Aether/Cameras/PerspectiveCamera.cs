@@ -27,7 +27,7 @@ namespace Aether.Cameras
         {
             // Generate raster and camera samples
             Point Pras = new Point(sample.ImageX, sample.ImageY, 0);
-            Point Pcamera = RasterToCamera.TransformPoint(Pras);
+            Point Pcamera = RasterToCamera.TransformPoint(ref Pras);
             ray = new Ray(new Point(0, 0, 0), Vector.Normalize((Vector) Pcamera), 0.0f);
             // Modify ray for depth of field
             if (LensRadius > 0.0f)
@@ -55,7 +55,7 @@ namespace Aether.Cameras
         {
             // Generate raster and camera samples
             Point Pras = new Point(sample.ImageX, sample.ImageY, 0);
-            Point Pcamera = RasterToCamera.TransformPoint(Pras);
+            Point Pcamera = RasterToCamera.TransformPoint(ref Pras);
             ray = new RayDifferential(new Point(0, 0, 0), Vector.Normalize((Vector) Pcamera), 0.0f);
             // Modify ray for depth of field
             if (LensRadius > 0.0f)

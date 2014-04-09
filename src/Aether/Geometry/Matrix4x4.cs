@@ -4,17 +4,17 @@ namespace Aether.Geometry
 {
     public class Matrix4x4
     {
-        private readonly float[,] _values;
+        public readonly float[,] M;
 
         public Matrix4x4()
         {
-            _values = new float[4, 4];
-            _values[0, 0] = _values[1, 1] = _values[2, 2] = _values[3, 3] = 1.0f;
+            M = new float[4, 4];
+            M[0, 0] = M[1, 1] = M[2, 2] = M[3, 3] = 1.0f;
         }
 
         public Matrix4x4(float[,] values)
         {
-            _values = values;
+            M = values;
         }
 
         public Matrix4x4(
@@ -23,28 +23,23 @@ namespace Aether.Geometry
             float t20, float t21, float t22, float t23,
             float t30, float t31, float t32, float t33)
         {
-            _values = new float[4, 4];
-            _values[0, 0] = t00;
-            _values[0, 1] = t01;
-            _values[0, 2] = t02;
-            _values[0, 3] = t03;
-            _values[1, 0] = t10;
-            _values[1, 1] = t11;
-            _values[1, 2] = t12;
-            _values[1, 3] = t13;
-            _values[2, 0] = t20;
-            _values[2, 1] = t21;
-            _values[2, 2] = t22;
-            _values[2, 3] = t23;
-            _values[3, 0] = t30;
-            _values[3, 1] = t31;
-            _values[3, 2] = t32;
-            _values[3, 3] = t33;
-        }
-
-        public float[,] M
-        {
-            get { return _values; }
+            M = new float[4, 4];
+            M[0, 0] = t00;
+            M[0, 1] = t01;
+            M[0, 2] = t02;
+            M[0, 3] = t03;
+            M[1, 0] = t10;
+            M[1, 1] = t11;
+            M[1, 2] = t12;
+            M[1, 3] = t13;
+            M[2, 0] = t20;
+            M[2, 1] = t21;
+            M[2, 2] = t22;
+            M[2, 3] = t23;
+            M[3, 0] = t30;
+            M[3, 1] = t31;
+            M[3, 2] = t32;
+            M[3, 3] = t33;
         }
 
         public override bool Equals(object obj)
@@ -55,20 +50,20 @@ namespace Aether.Geometry
 
             for (int i = 0; i < 4; ++i)
                 for (int j = 0; j < 4; ++j)
-                    if (_values[i,j] != m2._values[i,j])
+                    if (M[i,j] != m2.M[i,j])
                         return false;
             return true;
         }
 
         public override int GetHashCode()
         {
-            return _values.GetHashCode();
+            return M.GetHashCode();
         }
 
         public Matrix4x4 Clone()
         {
             var values = new float[4, 4];
-            Array.Copy(_values, values, _values.LongLength);
+            Array.Copy(M, values, M.LongLength);
             return new Matrix4x4(values);
         }
 
@@ -88,7 +83,7 @@ namespace Aether.Geometry
             int[] indxc = new int[4], indxr = new int[4];
             int[] ipiv = { 0, 0, 0, 0 };
             var minv = new float[4, 4];
-            Array.Copy(m._values, minv, m._values.LongLength);
+            Array.Copy(m.M, minv, m.M.LongLength);
             for (int i = 0; i < 4; i++)
             {
                 int irow = -1, icol = -1;

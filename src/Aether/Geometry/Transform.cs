@@ -62,6 +62,11 @@ namespace Aether.Geometry
 
         public Point TransformPoint(Point pt)
         {
+            return TransformPoint(ref pt);
+        }
+
+        public Point TransformPoint(ref Point pt)
+        {
             float x = pt.X, y = pt.Y, z = pt.Z;
             float xp = _m.M[0, 0] * x + _m.M[0, 1] * y + _m.M[0, 2] * z + _m.M[0, 3];
             float yp = _m.M[1, 0] * x + _m.M[1, 1] * y + _m.M[1, 2] * z + _m.M[1, 3];
@@ -75,6 +80,11 @@ namespace Aether.Geometry
 
         public Vector TransformVector(Vector v)
         {
+            return TransformVector(ref v);
+        }
+
+        public Vector TransformVector(ref Vector v)
+        {
             float x = v.X, y = v.Y, z = v.Z;
             return new Vector(
                 _m.M[0, 0] * x + _m.M[0, 1] * y + _m.M[0, 2] * z,
@@ -83,6 +93,11 @@ namespace Aether.Geometry
         }
 
         public Normal TransformNormal(Normal n)
+        {
+            return TransformNormal(ref n);
+        }
+
+        public Normal TransformNormal(ref Normal n)
         {
             float x = n.X, y = n.Y, z = n.Z;
             return new Normal(
@@ -94,20 +109,20 @@ namespace Aether.Geometry
         public Ray TransformRay(Ray r)
         {
             var ret = r.Clone();
-            ret.Origin = TransformPoint(r.Origin);
-            ret.Direction = TransformVector(r.Direction);
+            ret.Origin = TransformPoint(ref r.Origin);
+            ret.Direction = TransformVector(ref r.Direction);
             return ret;
         }
 
         public RayDifferential TransformRayDifferential(RayDifferential r)
         {
             var ret = r.Clone();
-            ret.Origin = TransformPoint(r.Origin);
-            ret.Direction = TransformVector(r.Direction);
-            ret.RxOrigin = TransformPoint(r.RxOrigin);
-            ret.RyOrigin = TransformPoint(r.RyOrigin);
-            ret.RxDirection = TransformVector(r.RxDirection);
-            ret.RyDirection = TransformVector(r.RyDirection);
+            ret.Origin = TransformPoint(ref r.Origin);
+            ret.Direction = TransformVector(ref r.Direction);
+            ret.RxOrigin = TransformPoint(ref r.RxOrigin);
+            ret.RyOrigin = TransformPoint(ref r.RyOrigin);
+            ret.RxDirection = TransformVector(ref r.RxDirection);
+            ret.RyDirection = TransformVector(ref r.RyDirection);
             return ret;
         }
 

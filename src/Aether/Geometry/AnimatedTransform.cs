@@ -164,23 +164,23 @@ namespace Aether.Geometry
         public Point TransformPoint(float time, Point p)
         {
             if (!_actuallyAnimated || time <= _startTime)
-                return _startTransform.TransformPoint(p);
+                return _startTransform.TransformPoint(ref p);
             if (time >= _endTime)
-                return _endTransform.TransformPoint(p);
+                return _endTransform.TransformPoint(ref p);
             Transform t;
             Interpolate(time, out t);
-            return t.TransformPoint(p);
+            return t.TransformPoint(ref p);
         }
 
         public Vector TransformVector(float time, Vector v)
         {
             if (!_actuallyAnimated || time <= _startTime)
-                return _startTransform.TransformVector(v);
+                return _startTransform.TransformVector(ref v);
             if (time >= _endTime)
-                return _endTransform.TransformVector(v);
+                return _endTransform.TransformVector(ref v);
             Transform t;
             Interpolate(time, out t);
-            return t.TransformVector(v);
+            return t.TransformVector(ref v);
         }
     }
 }
